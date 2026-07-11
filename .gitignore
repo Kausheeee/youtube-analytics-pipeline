@@ -1,0 +1,35 @@
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual Environments
+yt-venv/
+venv/
+
+# Environment Variables
+.env
+
+# Logs
+logs/
+
+# dbt
+youtube_analytics/target/
+youtube_analytics/dbt_packages/
+youtube_analytics/logs/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python cache
+.pytest_cache/
+.mypy_cache/
+
+# Google credentials (adjust filename if needed)
+service_account.json
+
+data/

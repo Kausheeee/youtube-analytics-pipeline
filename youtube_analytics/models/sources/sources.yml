@@ -1,0 +1,14 @@
+# models/staging/youtube/sources.yml
+version: 2
+
+sources:
+  - name: raw_youtube
+    database: coral-balancer-501316-e6
+    schema: raw_youtube
+    tables:
+      - name: videos_raw
+      - name: channels_raw
+      - name: comments_raw
+      - name: playlists_raw
+      - name: playlist_items_raw
+      - name: categories_raw
