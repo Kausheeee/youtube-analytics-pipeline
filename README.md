@@ -26,30 +26,8 @@ The pipeline automatically extracts metadata from YouTube channels, loads the da
 
 ## 📂 Project Architecture
 
-```
-                   YouTube Data API
-                           │
-                           ▼
-                Python Extraction Scripts
-                           │
-                           ▼
-                 JSON Landing (Local Storage)
-                           │
-                           ▼
-              BigQuery Stage Tables
-                           │
-                           ▼
-               BigQuery Raw Tables
-                           │
-                           ▼
-                    dbt Transformations
-         (Staging → Intermediate → Marts)
-                           │
-                           ▼
-                Looker Studio Dashboard
-```
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/4814ac9f-0bf8-45c4-8afc-8c3e957ef047" />
 
----
 
 # 📁 Project Structure
 
@@ -175,6 +153,8 @@ Business reporting models are created on top of these tables for dashboarding.
 # 📈 Dashboard
 
 The dashboard provides insights into:
+<img width="1439" height="912" alt="image" src="https://github.com/user-attachments/assets/25b458dd-d4ae-4a1a-abd7-a751d797ca78" />
+
 
 ## Executive Overview
 
@@ -251,9 +231,7 @@ dim_category ───── fct_video_daily ───── dim_video
 # 🔮 Future Enhancements
 
 - Apache Airflow Orchestration
-- Docker Containerization
 - Data Quality Tests
-- CI/CD Pipeline
 - Automated Monitoring & Alerts
 
 ---
