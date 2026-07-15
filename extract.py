@@ -1,3 +1,4 @@
+import argparse
 from datetime import datetime, timezone
 
 from src.extract.extract_channels import extract_channels
@@ -7,6 +8,7 @@ from src.extract.extract_playlists import extract_playlists
 from src.extract.extract_categories import extract_categories
 
 from src.utils.save_json import save_json
+
 
 
 def get_snapshot_date():
@@ -82,6 +84,16 @@ def run_extraction(snapshot_date):
 
 if __name__ == "__main__":
 
-    snapshot = get_snapshot_date()
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--snapshot-date",
+        required=False,
+        help="Snapshot date in YYYY-MM-DD format",
+    )
+
+    args = parser.parse_args()
+
+    snapshot = args.snapshot_date or get_snapshot_date()
 
     run_extraction(snapshot)

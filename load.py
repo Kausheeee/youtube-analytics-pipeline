@@ -1,3 +1,4 @@
+import argparse
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -56,6 +57,16 @@ def run_loading(snapshot_date):
 
 if __name__ == "__main__":
 
-    snapshot = get_snapshot_date()
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--snapshot-date",
+        required=False,
+        help="Snapshot date in YYYY-MM-DD format",
+    )
+
+    args = parser.parse_args()
+
+    snapshot = args.snapshot_date or get_snapshot_date()
 
     run_loading(snapshot)
