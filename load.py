@@ -30,7 +30,13 @@ def run_loading(snapshot_date):
 
     ensure_dataset(client)
 
-    # ---------------- Channels ----------------
+    channel_names = get_channel_file_names()
+
+    # -------------------------------------------------
+    # Channels
+    # -------------------------------------------------
+
+    print("\nLoading Channels...")
 
     load_entity(
         client=client,
@@ -41,16 +47,112 @@ def run_loading(snapshot_date):
         schema=CHANNEL_SCHEMA,
         stage_table="channels_stage",
         target_table="channels_raw",
-        merge_keys=[
-            "channel_id",
-            "snapshot_date",
-        ],
+        merge_keys=["channel_id", "snapshot_date"],
         snapshot_date=snapshot_date,
     )
 
-    # Continue with Videos, Comments, Playlists,
-    # Playlist Items and Categories...
-    # (Exactly the same code you already have.)
+    # -------------------------------------------------
+    # Videos
+    # -------------------------------------------------
+
+    print("\nLoading Videos...")
+
+    for channel_name in channel_names:
+
+        load_entity(
+            client=client,
+            json_path=Path(
+                f"data/raw/videos/{snapshot_date}/{channel_name}.json"
+            ),
+            transformer=transform_video,
+            schema=VIDEO_SCHEMA,
+            stage_table="videos_stage",
+            target_table="videos_raw",
+            merge_keys=["video_id", "snapshot_date"],
+            snapshot_date=snapshot_date,
+        )
+
+    # -------------------------------------------------
+    # Comments
+    # -------------------------------------------------
+
+    print("\nLoading Comments...")
+
+    for channel_name in channel_names:
+
+        load_entity(
+            client=client,
+            json_path=Path(
+                f"data/raw/comments/{snapshot_date}/{channel_name}.json"
+            ),
+            transformer=transform_comment,
+            schema=COMMENT_SCHEMA,
+            stage_table="comments_stage",
+            target_table="comments_raw",
+            merge_keys=["comment_id"],
+            snapshot_date=None,
+        )
+
+    # -------------------------------------------------
+    # Playlists
+    # -------------------------------------------------
+
+    print("\nLoading Playlists...")
+
+    for channel_name in channel_names:
+
+        load_entity(
+            client=client,
+            json_path=Path(
+                f"data/raw/playlists/{snapshot_date}/{channel_name}_playlists.json"
+            ),
+            transformer=transform_playlist,
+            schema=PLAYLIST_SCHEMA,
+            stage_table="playlists_stage",
+            target_table="playlists_raw",
+            merge_keys=["playlist_id"],
+            snapshot_date=None,
+        )
+
+    # -------------------------------------------------
+    # Playlist Items
+    # -------------------------------------------------
+
+    print("\nLoading Playlist Items...")
+
+    for channel_name in channel_names:
+
+        load_entity(
+            client=client,
+            json_path=Path(
+                f"data/raw/playlists/{snapshot_date}/{channel_name}_playlist_items.json"
+            ),
+            transformer=transform_playlist_item,
+            schema=PLAYLIST_ITEM_SCHEMA,
+            stage_table="playlist_items_stage",
+            target_table="playlist_items_raw",
+            merge_keys=["playlist_id", "video_id"],
+            snapshot_date=None,
+        )
+
+    # -------------------------------------------------
+    # Categories
+    # -------------------------------------------------
+
+    print("\nLoading Categories...")
+
+    load_entity(
+        client=client,
+        json_path=Path(
+            f"data/raw/categories/{snapshot_date}/video_categories.json"
+        ),
+        transformer=transform_category,
+        schema=CATEGORY_SCHEMA,
+        stage_table="categories_stage",
+        target_table="categories_raw",
+        merge_keys=["category_id"],
+        snapshot_date=None,
+    )
 
     print("\nLoading Completed Successfully")
 
