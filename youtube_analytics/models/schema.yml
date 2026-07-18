@@ -1,0 +1,180 @@
+version: 2
+
+models:
+
+  # -----------------------------
+  # Staging Models
+  # -----------------------------
+
+  - name: stg_channel
+    columns:
+      - name: channel_id
+        tests:
+          - not_null
+
+      - name: snapshot_date
+        tests:
+          - not_null
+
+  - name: stg_video
+    columns:
+      - name: video_id
+        tests:
+          - not_null
+
+      - name: channel_id
+        tests:
+          - not_null
+
+      - name: snapshot_date
+        tests:
+          - not_null
+
+  - name: stg_playlist
+    columns:
+      - name: playlist_id
+        tests:
+          - not_null
+
+      - name: channel_id
+        tests:
+          - not_null
+
+  - name: stg_comment
+    columns:
+      - name: comment_id
+        tests:
+          - not_null
+
+      - name: video_id
+        tests:
+          - not_null
+
+  - name: stg_playlist_item
+    columns:
+      - name: playlist_id
+        tests:
+          - not_null
+
+      - name: video_id
+        tests:
+          - not_null
+
+  # -----------------------------
+  # Dimension Models
+  # -----------------------------
+
+  - name: dim_channel
+    columns:
+      - name: channel_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_video
+    columns:
+      - name: video_id
+        tests:
+          - unique
+          - not_null
+
+      - name: channel_id
+        tests:
+          - relationships:
+              to: ref('dim_channel')
+              field: channel_id
+
+  - name: dim_playlist
+    columns:
+      - name: channel_id
+        tests:
+          - relationships:
+              to: ref('dim_channel')
+              field: channel_id
+
+  - name: dim_category
+    columns:
+      - name: category_id
+        tests:
+          - unique
+          - not_null
+
+  # -----------------------------
+  # Fact Models
+  # -----------------------------
+
+  - name: fct_video_daily
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - video_id
+            - snapshot_date
+    columns:
+      - name: video_id
+        tests:
+          - relationships:
+              to: ref('dim_video')
+              field: video_id
+
+      - name: snapshot_date
+        tests:
+          - not_null
+
+  - name: fct_channel_daily
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - channel_id
+            - snapshot_date
+    columns:
+      - name: channel_id
+        tests:
+          - relationships:
+              to: ref('dim_channel')
+              field: channel_id
+
+      - name: snapshot_date
+        tests:
+          - not_null
+
+  # -----------------------------
+  # Mart Models
+  # -----------------------------
+
+  - name: mart_video_performance
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - video_id
+            - snapshot_date
+    columns:
+      - name: video_id
+        tests:
+          - not_null
+
+      - name: channel_id
+        tests:
+          - relationships:
+              to: ref('dim_channel')
+              field: channel_id
+          - not_null
+
+
+  - name: mart_channel_performance
+    tests:
+    - dbt_utils.unique_combination_of_columns:
+        combination_of_columns:
+          - channel_id
+          - snapshot_date
+
+    columns:
+    - name: channel_id
+      tests:
+        - not_null
+
+  - name: mart_playlist_performance
+    columns:
+      - name: playlist_id
+        tests:
+          - unique
+          - not_null
