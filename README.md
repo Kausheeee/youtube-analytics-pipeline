@@ -46,7 +46,7 @@ The pipeline automatically:
 
 > Replace the image below with your updated architecture diagram.
 
-![Architecture](docs/![alt text](image.png))
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/2603f34a-cb1e-499a-8257-3e5e4583ea94" />
 
 ---
 
@@ -256,7 +256,8 @@ The DAG performs the following tasks:
 
 > Add a screenshot of your DAG Graph View.
 
-![Airflow DAG](docs/![alt text](image-1.png))
+<img width="1199" height="230" alt="image" src="https://github.com/user-attachments/assets/ed99cf32-deed-4e6d-85b7-cfbe3c091950" />
+
 
 ---
 
@@ -275,7 +276,8 @@ The pipeline automatically sends email notifications for failed executions.
 
 Example:
 
-![Failure Email](docs/![alt text](image.png))
+<img width="1456" height="814" alt="image" src="https://github.com/user-attachments/assets/48b69801-3fc1-4208-9346-aa6db40f9fe1" />
+
 
 ---
 
