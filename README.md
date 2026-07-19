@@ -7,7 +7,7 @@
 ![Looker Studio](https://img.shields.io/badge/Looker-Studio-4285F4)
 ![GitHub](https://img.shields.io/badge/Git-GitHub-black?logo=github)
 
-An end-to-end **Analytics Engineering** project that extracts YouTube metadata using the **YouTube Data API**, loads it into **Google BigQuery**, transforms it using **dbt**, orchestrates the complete workflow with **Apache Airflow**, and visualizes insights using **Looker Studio**.
+An end-to-end **Analytics Engineering** project that extracts YouTube data using the **YouTube Data API**, loads it into **Google BigQuery**, transforms it using **dbt**, orchestrates the complete workflow with **Apache Airflow**, and visualizes insights using **Looker Studio**.
 
 ---
 
