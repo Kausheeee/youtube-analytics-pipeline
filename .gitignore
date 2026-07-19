@@ -6,6 +6,7 @@ __pycache__/
 # Virtual Environments
 yt-venv/
 venv/
+airflow-venv/
 
 # Environment Variables
 .env
